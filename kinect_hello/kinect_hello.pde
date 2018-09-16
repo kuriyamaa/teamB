@@ -1,7 +1,18 @@
+import netP5.*;
+import oscP5.*;
+
 import SimpleOpenNI.*;
+
 
 //Generate a SimpleOpenNI object
 SimpleOpenNI kinect;
+
+//generate OSCP5 class of instance
+OscP5 oscP5;
+
+//net adderess to OSC
+NetAddress myRemoteLocation;
+
 
 //Vectors used to calculate the center of the mass
 PVector com = new PVector();
@@ -14,6 +25,13 @@ void setup() {
   size(640, 480);
   fill(255, 0, 0);
   kinect.setMirror(true);
+
+  //generate instance of OSCP5 and newly set the port 12001
+  oscP5 = new OscP5(this, 773);
+
+  //specify the IP adderess and port of the demension OSC
+  //127.0.0.1 is local host　
+  myRemoteLocation = new NetAddress("127.0.0.1", 773);
 }
 
 void draw() {
@@ -30,8 +48,23 @@ void draw() {
       drawSkeleton(userId);  
       //Draw the user Mass
       MassUser(userId);
+
+      kinect.convertRealWorldToProjective(com, com2d);
+
+      //send mass location by osc
+      //OscMessage myMessage = new OscMessage("/kinect/location");
+      //myMessage.add(com2d.x); 
+      //myMessage.add(com2d.y); 
+      //oscP5.send(myMessage, myRemoteLocation); // OSCメッセージを送信する
     }
   }
+
+  OscMessage myMessage = new OscMessage("/kinect/location");
+  myMessage.add(mouseX); 
+  myMessage.add(mouseY); 
+  oscP5.send(myMessage, myRemoteLocation); // OSCメッセージを送信する
+  fill(255, 0, 0);
+  ellipse(mouseX, mouseY, 30, 30);
 }
 //Draw the skeleton
 void drawSkeleton(int userId) {
@@ -76,16 +109,15 @@ void drawSkeleton(int userId) {
 }
 
 void drawJoint(int userId, int jointID) {
-  
+
   //get location of three dimension at each place
   PVector joint = new PVector();
   kinect.getJointPositionSkeleton(userId, jointID, joint);
-  
+
   //convert three dimension to two dimension
   PVector convertedJoint = new PVector();
   kinect.convertRealWorldToProjective(joint, convertedJoint);
   ellipse(convertedJoint.x, convertedJoint.y, 5, 5);
-  
 }
 
 //Calibration not required
