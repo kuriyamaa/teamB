@@ -52,10 +52,12 @@ void draw() {
       kinect.convertRealWorldToProjective(com, com2d);
 
       //send mass location by osc
-      //OscMessage myMessage = new OscMessage("/kinect/location");
+      OscMessage myMessage = new OscMessage("kinect");
       //each born location
-      //myMessage.add(SimpleOpenNI.SKEL_HEAD); 
-      //myMessage.add(SimpleOpenNI.SKEL_NECK); 
+      myMessage.add(convertLocationX(userId,SimpleOpenNI.SKEL_HEAD)); 
+      myMessage.add(convertLocationY(userId,SimpleOpenNI.SKEL_HEAD)); 
+      myMessage.add(convertLocationX(userId,SimpleOpenNI.SKEL_NECK)); 
+      myMessage.add(convertLocationY(userId,SimpleOpenNI.SKEL_NECK));  
       //myMessage.add(SimpleOpenNI.SKEL_LEFT_SHOULDER); 
       //myMessage.add(SimpleOpenNI.SKEL_LEFT_ELBOW); 
       //myMessage.add(SimpleOpenNI.SKEL_NECK); 
@@ -75,18 +77,17 @@ void draw() {
 
 
       //send OSC message
-      //oscP5.send(myMessage, myRemoteLocation);
+      oscP5.send(myMessage, myRemoteLocation);
     }
   }
-  OscMessage myMessage = new OscMessage("kinect");
-  myMessage.add(mouseX);
-  myMessage.add(mouseY); 
-  //send OSC message
-  oscP5.send(myMessage, myRemoteLocation);
-  //oscP5.plug(this,"getData","/pattern");
-  println(myMessage);
-  fill(255, 0, 0);
-  ellipse(mouseX, mouseY, 30, 30);
+  //OscMessage myMessage = new OscMessage("kinect");
+  //myMessage.add(mouseX);
+  //myMessage.add(mouseY); 
+  ////send OSC message
+  //oscP5.send(myMessage, myRemoteLocation);
+  
+  //fill(255, 0, 0);
+  //ellipse(mouseX, mouseY, 30, 30);
 }
 //Draw the skeleton
 void drawSkeleton(int userId) {
@@ -140,6 +141,30 @@ void drawJoint(int userId, int jointID) {
   PVector convertedJoint = new PVector();
   kinect.convertRealWorldToProjective(joint, convertedJoint);
   ellipse(convertedJoint.x, convertedJoint.y, 5, 5);
+}
+
+float convertLocationX(int userId,int jointID){
+  
+  //get location of three dimension at each place
+  PVector joint = new PVector();
+  kinect.getJointPositionSkeleton(userId, jointID, joint);
+
+  //convert three dimension to two dimension
+  PVector convertedJoint = new PVector();
+  kinect.convertRealWorldToProjective(joint, convertedJoint);
+  return convertedJoint.x;
+}
+
+float convertLocationY(int userId,int jointID){
+  
+  //get location of three dimension at each place
+  PVector joint = new PVector();
+  kinect.getJointPositionSkeleton(userId, jointID, joint);
+
+  //convert three dimension to two dimension
+  PVector convertedJoint = new PVector();
+  kinect.convertRealWorldToProjective(joint, convertedJoint);
+  return convertedJoint.y;
 }
 
 //Calibration not required
