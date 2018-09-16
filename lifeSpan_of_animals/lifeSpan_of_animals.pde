@@ -3,6 +3,7 @@ import oscP5.*;
 
 //generate OSCP5 class of instance
 OscP5 oscP5; 
+NetAddress myRemoteLocation;
 
 ArrayList<Wave> wv=new ArrayList<Wave>();
 ArrayList<Butterfly> bf=new ArrayList<Butterfly>();
@@ -15,24 +16,30 @@ PVector targetLoc;
 
 
 void setup() {
-  
+
   //fullScreen(P2D);
-  size(800,800,P2D);
+  size(800, 800, P2D);
   background(21);
   smooth();
   colorMode(HSB, 360, 100, 100, 100);
   blendMode(ADD);
   frameRate(30);
-  
-  targetLoc=new PVector(width/2,height/2);
-  
+
+
   // ポートを12000に設定して新規にOSCP5のインスタンスを生成する
-  oscP5 = new OscP5(this, 773);
+  oscP5 = new OscP5(this, 7400);
+  myRemoteLocation = new NetAddress("127.0.01", 7400);
+
+  /* 受信用の変数。右の数字はポート番号。送信側のポート番号とあわせる。 */
+  oscP5.plug(this, "onRecieve", "/trigger");
+
+  targetLoc=new PVector(width/2, height/2);
 }
 
 void draw() {
-   
-  
+
+  //targetLoc=new PVector(mouseX, mouseY);
+
   background(21);
 
   //ganerate wave
@@ -48,18 +55,12 @@ void draw() {
   for (int i=bf.size()-1; i>0; i--) {
     Butterfly b=bf.get(i);
     b.run();
-    if (b.lifeSpan<0.0) {
-      bf.remove(i);
-    }
   }
 
   //モンシロチョウ
   for (int i=ms.size()-1; i>0; i--) {
     Monshiro m=ms.get(i);
     m.run();
-    if (m.lifeSpan<0.0) {
-      ms.remove(i);
-    }
   }
 
   //targetの可視化
@@ -83,13 +84,12 @@ void keyPressed() {
   }
 }
 
-// OSCメッセージを受信した際に実行するイベント
-void oscEvent(OscMessage theOscMessage) {
-  // もしOSCメッセージが /mouse/position だったら
-  if (theOscMessage.checkAddrPattern("/kinect/location")==true) {   
-    // 最初の値をint型としてX座標にする
-    targetLoc.x = theOscMessage.get(0).intValue();
-    // 次の値をint型としてY座標にする
-    targetLoc.y = theOscMessage.get(1).intValue();
-  }
+//function receive message from kinect
+//〜.plugで指定したtestという名前を持つ関数 
+public void onRecieve(float x, float y) {// int theAにデータの値を受ける
+  println("### plug event method. received a message /trigger");
+  //println("received: "+num);//theAを画面に出力する
+  targetLoc.x=x;
+  targetLoc.y=y;
+  println(targetLoc);
 }

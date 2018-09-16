@@ -41,8 +41,6 @@ class Butterfly {
     imageMode(CENTER);
     pushMatrix();
     translate(location.x, location.y);
-    tint(int(lifeSpan*255/40));
-    //image(bfimg, 0, 0, 60, 40);
     image(bfimg, 0, 0, map(noise(widthNoise),0,1,0,60), 40);
     popMatrix();
   }

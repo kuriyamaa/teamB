@@ -26,12 +26,13 @@ void setup() {
   fill(255, 0, 0);
   kinect.setMirror(true);
 
-  //generate instance of OSCP5 and newly set the port 12001
-  oscP5 = new OscP5(this, 773);
+  //generate instance of OSCP5 and newly set the port 7740
+  oscP5 = new OscP5(this, 7740);
 
   //specify the IP adderess and port of the demension OSC
   //127.0.0.1 is local host　
-  myRemoteLocation = new NetAddress("127.0.0.1", 773);
+  //myRemoteLocation = new NetAddress("172.20.0.115", 7400);
+  myRemoteLocation = new NetAddress("127.0.0.1", 7400);
 }
 
 void draw() {
@@ -53,16 +54,39 @@ void draw() {
 
       //send mass location by osc
       //OscMessage myMessage = new OscMessage("/kinect/location");
-      //myMessage.add(com2d.x); 
-      //myMessage.add(com2d.y); 
-      //oscP5.send(myMessage, myRemoteLocation); // OSCメッセージを送信する
+      //each born location
+      //myMessage.add(SimpleOpenNI.SKEL_HEAD); 
+      //myMessage.add(SimpleOpenNI.SKEL_NECK); 
+      //myMessage.add(SimpleOpenNI.SKEL_LEFT_SHOULDER); 
+      //myMessage.add(SimpleOpenNI.SKEL_LEFT_ELBOW); 
+      //myMessage.add(SimpleOpenNI.SKEL_NECK); 
+      //myMessage.add(SimpleOpenNI.SKEL_RIGHT_SHOULDER); 
+      //myMessage.add(SimpleOpenNI.SKEL_RIGHT_ELBOW); 
+      //myMessage.add(SimpleOpenNI.SKEL_TORSO); 
+      //myMessage.add(SimpleOpenNI.SKEL_LEFT_HIP); 
+      //myMessage.add(SimpleOpenNI.SKEL_LEFT_FOOT); 
+      //myMessage.add(SimpleOpenNI.SKEL_RIGHT_HIP); 
+      //myMessage.add(SimpleOpenNI.SKEL_LEFT_FOOT); 
+      //myMessage.add(SimpleOpenNI.SKEL_RIGHT_KNEE); 
+      //myMessage.add(SimpleOpenNI.SKEL_LEFT_HIP); 
+      //myMessage.add(SimpleOpenNI.SKEL_RIGHT_FOOT); 
+      //myMessage.add(SimpleOpenNI.SKEL_RIGHT_HAND); 
+      //myMessage.add(SimpleOpenNI.SKEL_LEFT_HAND); 
+      
+      
+      
+      //send OSC message
+      //oscP5.send(myMessage, myRemoteLocation);
     }
   }
 
-  OscMessage myMessage = new OscMessage("/kinect/location");
+  OscMessage myMessage = new OscMessage("/trigger");
   myMessage.add(mouseX); 
   myMessage.add(mouseY); 
-  oscP5.send(myMessage, myRemoteLocation); // OSCメッセージを送信する
+  //send OSC message
+  oscP5.send(myMessage, myRemoteLocation);
+  //oscP5.plug(this,"getData","/pattern");
+  println(myMessage);
   fill(255, 0, 0);
   ellipse(mouseX, mouseY, 30, 30);
 }
