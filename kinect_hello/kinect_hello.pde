@@ -53,41 +53,53 @@ void draw() {
 
       //send mass location by osc
       OscMessage myMessage = new OscMessage("kinect");
-      //each born location
-      myMessage.add(convertLocationX(userId,SimpleOpenNI.SKEL_HEAD)); 
-      myMessage.add(convertLocationY(userId,SimpleOpenNI.SKEL_HEAD)); 
-      myMessage.add(convertLocationX(userId,SimpleOpenNI.SKEL_NECK)); 
-      myMessage.add(convertLocationY(userId,SimpleOpenNI.SKEL_NECK));  
-      //myMessage.add(SimpleOpenNI.SKEL_LEFT_SHOULDER); 
-      //myMessage.add(SimpleOpenNI.SKEL_LEFT_ELBOW); 
-      //myMessage.add(SimpleOpenNI.SKEL_NECK); 
-      //myMessage.add(SimpleOpenNI.SKEL_RIGHT_SHOULDER); 
-      //myMessage.add(SimpleOpenNI.SKEL_RIGHT_ELBOW); 
-      //myMessage.add(SimpleOpenNI.SKEL_TORSO); 
-      //myMessage.add(SimpleOpenNI.SKEL_LEFT_HIP); 
-      //myMessage.add(SimpleOpenNI.SKEL_LEFT_FOOT); 
-      //myMessage.add(SimpleOpenNI.SKEL_RIGHT_HIP); 
-      //myMessage.add(SimpleOpenNI.SKEL_LEFT_FOOT); 
-      //myMessage.add(SimpleOpenNI.SKEL_RIGHT_KNEE); 
-      //myMessage.add(SimpleOpenNI.SKEL_LEFT_HIP); 
-      //myMessage.add(SimpleOpenNI.SKEL_RIGHT_FOOT); 
-      //myMessage.add(SimpleOpenNI.SKEL_RIGHT_HAND); 
-      //myMessage.add(SimpleOpenNI.SKEL_LEFT_HAND); 
-
-
-
+      //send each born location
+      myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_HEAD)); 
+      myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_HEAD)); 
+      myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_NECK)); 
+      myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_NECK));
+      myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_SHOULDER)); 
+      myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_SHOULDER));  
+      myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_ELBOW)); 
+      myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_ELBOW));  
+      myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_NECK)); 
+      myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_NECK));  
+      myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_RIGHT_SHOULDER)); 
+      myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_RIGHT_SHOULDER)); 
+      myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_RIGHT_ELBOW)); 
+      myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_RIGHT_ELBOW)); 
+      myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_TORSO)); 
+      myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_TORSO)); 
+      myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_HIP)); 
+      myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_HIP)); 
+      myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_FOOT)); 
+      myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_FOOT)); 
+      myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_RIGHT_HIP)); 
+      myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_RIGHT_HIP));  
+      myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_FOOT)); 
+      myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_FOOT));  
+      myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_RIGHT_KNEE)); 
+      myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_RIGHT_KNEE)); 
+      myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_HIP)); 
+      myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_HIP)); 
+      myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_RIGHT_FOOT)); 
+      myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_RIGHT_FOOT)); 
+      myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_RIGHT_HAND)); 
+      myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_RIGHT_HAND)); 
+      myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_HAND)); 
+      myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_HAND)); 
       //send OSC message
       oscP5.send(myMessage, myRemoteLocation);
     }
   }
-  //OscMessage myMessage = new OscMessage("kinect");
-  //myMessage.add(mouseX);
-  //myMessage.add(mouseY); 
+  OscMessage myMessage = new OscMessage("kinect");
+  myMessage.add(mouseX);
+  myMessage.add(mouseY); 
   ////send OSC message
-  //oscP5.send(myMessage, myRemoteLocation);
-  
-  //fill(255, 0, 0);
-  //ellipse(mouseX, mouseY, 30, 30);
+  oscP5.send(myMessage, myRemoteLocation);
+
+  fill(255, 0, 0);
+  ellipse(mouseX, mouseY, 30, 30);
 }
 //Draw the skeleton
 void drawSkeleton(int userId) {
@@ -143,8 +155,8 @@ void drawJoint(int userId, int jointID) {
   ellipse(convertedJoint.x, convertedJoint.y, 5, 5);
 }
 
-float convertLocationX(int userId,int jointID){
-  
+float convertLocationX(int userId, int jointID) {
+
   //get location of three dimension at each place
   PVector joint = new PVector();
   kinect.getJointPositionSkeleton(userId, jointID, joint);
@@ -155,8 +167,8 @@ float convertLocationX(int userId,int jointID){
   return convertedJoint.x;
 }
 
-float convertLocationY(int userId,int jointID){
-  
+float convertLocationY(int userId, int jointID) {
+
   //get location of three dimension at each place
   PVector joint = new PVector();
   kinect.getJointPositionSkeleton(userId, jointID, joint);

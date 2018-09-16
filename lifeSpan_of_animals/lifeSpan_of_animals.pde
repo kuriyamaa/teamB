@@ -12,6 +12,7 @@ float bfSpan=30;
 float msSpan=40;
 
 PVector targetLoc;
+PVector []body=new PVector[17];
 
 
 void setup() {
@@ -29,6 +30,10 @@ void setup() {
   oscP5 = new OscP5(this, 12000);
 
   targetLoc=new PVector(width/2, height/2);
+  
+  for(int i=0;i<body.length;i++){
+     body[i]=new PVector(width/2,height/2); 
+  }
 }
 
 void draw() {
@@ -61,7 +66,10 @@ void draw() {
   //targetの可視化
   noStroke();
   fill(0, 100, 100, 100);
-  ellipse(targetLoc.x, targetLoc.y, 30, 30);
+  //ellipse(targetLoc.x, targetLoc.y, 30, 30);
+  for(int i=0;i<body.length;i++){
+     ellipse(body[i].x,body[i].y,30,30); 
+  }
 }
 
 
@@ -83,6 +91,15 @@ void keyPressed() {
 void oscEvent(OscMessage theOscMessage) {
   // もしOSCメッセージが
   if (theOscMessage.checkAddrPattern("kinect")==true) {   
+    for(int i=0;i<body.length;i++){
+       body[i]=new PVector(map(theOscMessage.get(2*i).intValue(),0,640,0,width),
+                           map(theOscMessage.get(2*i+1).intValue(),0,480,0,height)); 
+    }
+    fill(225);
+    stroke(225);
+    text(body[0].x,0,0);
+    
+    
     // 最初の値をint型としてX座標にする
     targetLoc.x = map(theOscMessage.get(0).intValue(),0,640,0,width);
     // 次の値をint型としてY座標にする
