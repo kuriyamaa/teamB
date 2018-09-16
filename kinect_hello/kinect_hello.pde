@@ -27,12 +27,11 @@ void setup() {
   kinect.setMirror(true);
 
   //generate instance of OSCP5 and newly set the port 7740
-  oscP5 = new OscP5(this, 7740);
+  oscP5 = new OscP5(this, 12001);
 
   //specify the IP adderess and port of the demension OSC
   //127.0.0.1 is local host　
-  //myRemoteLocation = new NetAddress("172.20.0.115", 7400);
-  myRemoteLocation = new NetAddress("127.0.0.1", 7400);
+  myRemoteLocation = new NetAddress("127.0.0.1", 12000);
 }
 
 void draw() {
@@ -72,16 +71,15 @@ void draw() {
       //myMessage.add(SimpleOpenNI.SKEL_RIGHT_FOOT); 
       //myMessage.add(SimpleOpenNI.SKEL_RIGHT_HAND); 
       //myMessage.add(SimpleOpenNI.SKEL_LEFT_HAND); 
-      
-      
-      
+
+
+
       //send OSC message
       //oscP5.send(myMessage, myRemoteLocation);
     }
   }
-
-  OscMessage myMessage = new OscMessage("/trigger");
-  myMessage.add(mouseX); 
+  OscMessage myMessage = new OscMessage("kinect");
+  myMessage.add(mouseX);
   myMessage.add(mouseY); 
   //send OSC message
   oscP5.send(myMessage, myRemoteLocation);

@@ -3,7 +3,6 @@ import oscP5.*;
 
 //generate OSCP5 class of instance
 OscP5 oscP5; 
-NetAddress myRemoteLocation;
 
 ArrayList<Wave> wv=new ArrayList<Wave>();
 ArrayList<Butterfly> bf=new ArrayList<Butterfly>();
@@ -26,12 +25,8 @@ void setup() {
   frameRate(30);
 
 
-  // ポートを12000に設定して新規にOSCP5のインスタンスを生成する
-  oscP5 = new OscP5(this, 7400);
-  myRemoteLocation = new NetAddress("127.0.01", 7400);
-
-  /* 受信用の変数。右の数字はポート番号。送信側のポート番号とあわせる。 */
-  oscP5.plug(this, "onRecieve", "/trigger");
+// ポートを12000に設定して新規にOSCP5のインスタンスを生成する
+  oscP5 = new OscP5(this, 12000);
 
   targetLoc=new PVector(width/2, height/2);
 }
@@ -84,12 +79,13 @@ void keyPressed() {
   }
 }
 
-//function receive message from kinect
-//〜.plugで指定したtestという名前を持つ関数 
-public void onRecieve(float x, float y) {// int theAにデータの値を受ける
-  println("### plug event method. received a message /trigger");
-  //println("received: "+num);//theAを画面に出力する
-  targetLoc.x=x;
-  targetLoc.y=y;
-  println(targetLoc);
+// OSCメッセージを受信した際に実行するイベント
+void oscEvent(OscMessage theOscMessage) {
+  // もしOSCメッセージが
+  if (theOscMessage.checkAddrPattern("kinect")==true) {   
+    // 最初の値をint型としてX座標にする
+    targetLoc.x = map(theOscMessage.get(0).intValue(),0,640,0,width);
+    // 次の値をint型としてY座標にする
+    targetLoc.y = map(theOscMessage.get(1).intValue(),0,480,0,height);
+  }
 }
