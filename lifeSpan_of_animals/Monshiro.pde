@@ -1,10 +1,10 @@
-class Mendako extends Butterfly {
+class Monshiro extends Butterfly {
   
-  PImage mdimg;
+  PImage msimg;
 
-  Mendako(PVector _location, float _lifeSpan) {
+  Monshiro(PVector _location, float _lifeSpan) {
     super(_location, _lifeSpan);
-    mdimg=loadImage("tako.jpg");
+    msimg=loadImage("monshiro.jpg");
   }
 
   void display() {
@@ -12,7 +12,7 @@ class Mendako extends Butterfly {
     pushMatrix();
     translate(location.x, location.y);
     tint(int(lifeSpan*255/50));
-    image(mdimg, 0, 0, 30, 30);
+    image(msimg, 0, 0, 100, 100);
     popMatrix();
   }
 }

@@ -1,10 +1,10 @@
 ArrayList<Wave> wv=new ArrayList<Wave>();
 ArrayList<Butterfly> bf=new ArrayList<Butterfly>();
-ArrayList<Mendako> md=new ArrayList<Mendako>();
+ArrayList<Monshiro> ms=new ArrayList<Monshiro>();
 
-int bfNum=10;
-float bfSpan=40;
-float mdSpan=50;
+int bfNum=3;
+float bfSpan=30;
+float msSpan=40;
 
 
 void setup() {
@@ -19,11 +19,6 @@ void setup() {
 void draw() {
   background(21);
 
-  //targetの可視化
-  noStroke();
-  fill(0, 100, 100, 100);
-  ellipse(mouseX, mouseY, 30, 30);
-
   //波の部分
   for (int i=wv.size()-1; i>0; i--) {
     Wave w=wv.get(i); 
@@ -33,7 +28,7 @@ void draw() {
     }
   }
 
-  //蝶の部分
+  //モルフォチョウ
   for (int i=bf.size()-1; i>0; i--) {
     Butterfly b=bf.get(i);
     b.run();
@@ -42,23 +37,31 @@ void draw() {
     }
   }
 
-  //メンダコの部分
-  for (int i=md.size()-1; i>0; i--) {
-    Mendako m=md.get(i);
+  //モンシロチョウ
+  for (int i=ms.size()-1; i>0; i--) {
+    Monshiro m=ms.get(i);
     m.run();
     if (m.lifeSpan<0.0) {
-      md.remove(i);
+      ms.remove(i);
     }
   }
+
+  //targetの可視化
+  noStroke();
+  fill(0, 100, 100, 100);
+  ellipse(mouseX, mouseY, 30, 30);
 }
 
 void keyPressed() {
-  PVector location=new PVector(random(width), random(height));
-  wv.add(new Wave(location));
+
   if (key=='a'||key=='A') {
+    PVector location=new PVector(random(width), random(height));
     bf.add(new Butterfly(location, bfSpan));
+    wv.add(new Wave(location));
   }
   if (key=='s'||key=='S') {
-    md.add(new Mendako(location, mdSpan));
+    PVector location=new PVector(random(width), random(height));
+    ms.add(new Monshiro(location, msSpan));
+    wv.add(new Wave(location));
   }
 }
