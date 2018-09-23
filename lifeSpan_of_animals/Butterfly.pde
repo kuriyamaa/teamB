@@ -8,8 +8,11 @@ class Butterfly {
   PVector noise;
   float ynoise=0;
   float widthNoise=0;
+  PVector target;
+  float theta;
 
-  Butterfly(PVector _location, float _lifeSpan) {
+  Butterfly(PVector _location, float _lifeSpan, float _theta) {
+    theta=_theta;
     location=_location.get();
     lifeSpan=_lifeSpan;
     velocity=new PVector();
@@ -17,18 +20,15 @@ class Butterfly {
     bfimg=loadImage("butterfly.png");
   }
 
-  void run() {
-    update();
-    display();
-  }
 
-  void update() {
-    velocity=new PVector(mouseX-location.x, mouseY-location.y); 
+  void update(PVector _target) {
+    target=_target;
+    println(target);
+    velocity=new PVector(target.x-location.x, target.y-location.y); 
     velocity.normalize();
     velocity.mult(3);
     velocity.add(acceleration);
-    noise=new PVector(0,map(noise(ynoise),0,1,-15,15));
-    //velocity.add(noise);
+    noise=new PVector(0, map(noise(ynoise), 0, 1, -5, 5));
     velocity.y+=noise.y;
     location.add(velocity);
     acceleration.mult(0);
@@ -41,7 +41,9 @@ class Butterfly {
     imageMode(CENTER);
     pushMatrix();
     translate(location.x, location.y);
-    image(bfimg, 0, 0, map(noise(widthNoise),0,1,0,60), 40);
+    rotate(theta);
+    image(bfimg, 0, 0, map(noise(widthNoise), 0, 1, 0, 60), 40);
+    image(bfimg, 0, 0, map(noise(widthNoise), 0, 1, 0, 60), 40);
     popMatrix();
   }
 
@@ -51,11 +53,5 @@ class Butterfly {
     } else {
       return false;
     }
-  }
-
-  void applyForce(PVector _force) {
-    PVector force=_force.get();
-    force.div(mass);
-    acceleration.add(force);
   }
 }

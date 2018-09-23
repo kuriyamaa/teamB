@@ -18,7 +18,7 @@ PVector []body=new PVector[17];
 void setup() {
 
   //fullScreen(P2D);
-  size(800, 800, P2D);
+  size(1200, 1200, P2D);
   background(21);
   smooth();
   colorMode(HSB, 360, 100, 100, 100);
@@ -26,19 +26,18 @@ void setup() {
   frameRate(30);
 
 
-// ポートを12000に設定して新規にOSCP5のインスタンスを生成する
+  // ポートを12000に設定して新規にOSCP5のインスタンスを生成する
   oscP5 = new OscP5(this, 12000);
 
   targetLoc=new PVector(width/2, height/2);
+
   
-  for(int i=0;i<body.length;i++){
-     body[i]=new PVector(width/2,height/2); 
+  for (int i=0; i<body.length; i++) {
+    body[i]=new PVector(width/2, height/2, radians(random(-45, 45)));
   }
 }
 
 void draw() {
-
-  //targetLoc=new PVector(mouseX, mouseY);
 
   background(21);
 
@@ -54,21 +53,29 @@ void draw() {
   //モルフォチョウ
   for (int i=bf.size()-1; i>0; i--) {
     Butterfly b=bf.get(i);
-    b.run();
+    b.update(body[i%13]);
+    //b.update(body[12]);
+    b.display();
+    if (b.lifeSpan<0.0) {
+      bf.remove(i);
+    }
   }
 
   //モンシロチョウ
   for (int i=ms.size()-1; i>0; i--) {
     Monshiro m=ms.get(i);
-    m.run();
+    m.update(body[i%13]);
+    m.display();
+    if (m.lifeSpan<0.0) {
+      ms.remove(i);
+    }
   }
 
   //targetの可視化
   noStroke();
   fill(0, 100, 100, 100);
-  //ellipse(targetLoc.x, targetLoc.y, 30, 30);
-  for(int i=0;i<body.length;i++){
-     ellipse(body[i].x,body[i].y,30,30); 
+  for (int i=0; i<13; i++) {
+    ellipse(body[i].x, body[i].y, 5, 5);
   }
 }
 
@@ -77,13 +84,19 @@ void keyPressed() {
 
   if (key=='a'||key=='A') {
     PVector location=new PVector(random(width), random(height));
-    bf.add(new Butterfly(location, bfSpan));
+    bf.add(new Butterfly(location, bfSpan,radians(random(-45,45))));
     wv.add(new Wave(location));
+    for(int i=0;i<ms.size();i++){
+       ms.remove(i); 
+    }
   }
   if (key=='s'||key=='S') {
     PVector location=new PVector(random(width), random(height));
-    ms.add(new Monshiro(location, msSpan));
+    ms.add(new Monshiro(location, msSpan,radians(random(-45,45))));
     wv.add(new Wave(location));
+    for(int i=0;i<bf.size();i++){
+       bf.remove(i); 
+    }
   }
 }
 
@@ -91,18 +104,16 @@ void keyPressed() {
 void oscEvent(OscMessage theOscMessage) {
   // もしOSCメッセージが
   if (theOscMessage.checkAddrPattern("kinect")==true) {   
-    for(int i=0;i<body.length;i++){
-       body[i]=new PVector(map(theOscMessage.get(2*i).intValue(),0,640,0,width),
-                           map(theOscMessage.get(2*i+1).intValue(),0,480,0,height)); 
+
+    for (int i=0; i<13; i++) {
+      body[i].x=map(theOscMessage.get(2*i).floatValue(), 0, 640, 0, width);
+      body[i].y=map(theOscMessage.get(2*i+1).floatValue(), 0, 640, 0, height);
     }
-    fill(225);
-    stroke(225);
-    text(body[0].x,0,0);
-    
-    
+  //println(body[12]);
+
     // 最初の値をint型としてX座標にする
-    targetLoc.x = map(theOscMessage.get(0).intValue(),0,640,0,width);
+    //targetLoc.x = map(theOscMessage.get(2).intValue(),0,640,0,width);
     // 次の値をint型としてY座標にする
-    targetLoc.y = map(theOscMessage.get(1).intValue(),0,480,0,height);
+    //targetLoc.y = map(theOscMessage.get(3).intValue(),0,480,0,height);
   }
 }
