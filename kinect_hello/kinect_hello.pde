@@ -34,7 +34,8 @@ void setup() {
 
   //specify the IP adderess and port of the demension OSC
   //127.0.0.1 is local host　
-  myRemoteLocation = new NetAddress("127.0.0.1", 12000);
+  //myRemoteLocation = new NetAddress("127.0.0.1", 12000);
+  myRemoteLocation = new NetAddress("172.20.0.53", 12000);
 }
 
 void draw() {
@@ -57,98 +58,23 @@ void draw() {
       //send mass location by osc
       OscMessage myMessage = new OscMessage("kinect");
       //send each born location
-      //myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_HEAD)); 
-      //myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_HEAD)); 
-      //myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_NECK)); 
-      //myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_NECK));
-      //myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_SHOULDER)); 
-      //myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_SHOULDER));  
-      //myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_ELBOW)); 
-      //myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_ELBOW));  
-      //myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_NECK)); 
-      //myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_NECK));  
-      //myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_RIGHT_SHOULDER)); 
-      //myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_RIGHT_SHOULDER)); 
-      //myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_RIGHT_ELBOW)); 
-      //myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_RIGHT_ELBOW)); 
-      //myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_TORSO)); 
-      //myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_TORSO)); 
-      //myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_HIP)); 
-      //myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_HIP)); 
-      //myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_FOOT)); 
-      //myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_FOOT)); 
-      //myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_RIGHT_HIP)); 
-      //myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_RIGHT_HIP));  
-      //myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_FOOT)); 
-      //myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_FOOT));  
-      //myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_RIGHT_KNEE)); 
-      //myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_RIGHT_KNEE)); 
-      //myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_HIP)); 
-      //myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_HIP)); 
-      //myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_RIGHT_FOOT)); 
-      //myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_RIGHT_FOOT)); 
-      //myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_RIGHT_HAND)); 
-      //myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_RIGHT_HAND)); 
-      //myMessage.add(convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_HAND)); 
-      //myMessage.add(convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_HAND)); 
       bodyX[0]=convertLocationX(userId, SimpleOpenNI.SKEL_HEAD);
       bodyY[0]=convertLocationY(userId, SimpleOpenNI.SKEL_HEAD);
-      bodyX[1]=convertLocationX(userId, SimpleOpenNI.SKEL_NECK);
-      bodyY[1]=convertLocationY(userId, SimpleOpenNI.SKEL_NECK);
-      bodyX[2]=convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_SHOULDER);
-      bodyY[2]=convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_SHOULDER);
-      bodyX[3]=convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_ELBOW);
-      bodyY[3]=convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_ELBOW);
-      bodyX[4]=convertLocationX(userId, SimpleOpenNI.SKEL_NECK);
-      bodyY[4]=convertLocationY(userId, SimpleOpenNI.SKEL_NECK);
-      bodyX[5]=convertLocationX(userId, SimpleOpenNI.SKEL_RIGHT_SHOULDER);
-      bodyY[5]=convertLocationY(userId, SimpleOpenNI.SKEL_RIGHT_SHOULDER);
-      bodyX[6]=convertLocationX(userId, SimpleOpenNI.SKEL_RIGHT_ELBOW);
-      bodyY[6]=convertLocationY(userId, SimpleOpenNI.SKEL_RIGHT_ELBOW);
-      bodyX[7]=convertLocationX(userId, SimpleOpenNI.SKEL_TORSO);
-      bodyY[7]=convertLocationY(userId, SimpleOpenNI.SKEL_TORSO);
-      bodyX[8]=convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_HIP);
-      bodyY[8]=convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_HIP);
-      bodyX[9]=convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_FOOT);
-      bodyY[9]=convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_FOOT);
-      bodyX[10]=convertLocationX(userId, SimpleOpenNI.SKEL_RIGHT_KNEE);
-      bodyY[10]=convertLocationY(userId, SimpleOpenNI.SKEL_RIGHT_KNEE);
-      bodyX[11]=convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_HIP);
-      bodyY[11]=convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_HIP);
-      bodyX[12]=convertLocationX(userId, SimpleOpenNI.SKEL_RIGHT_HAND);
-      bodyY[12]=convertLocationY(userId, SimpleOpenNI.SKEL_RIGHT_HAND);
-      bodyX[13]=convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_HAND);
-      bodyY[13]=convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_HAND);
+      bodyX[1]=convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_SHOULDER);
+      bodyY[1]=convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_SHOULDER);
+      bodyX[2]=convertLocationX(userId, SimpleOpenNI.SKEL_RIGHT_SHOULDER);
+      bodyY[2]=convertLocationY(userId, SimpleOpenNI.SKEL_RIGHT_SHOULDER);
+      bodyX[3]=convertLocationX(userId, SimpleOpenNI.SKEL_TORSO);
+      bodyY[3]=convertLocationY(userId, SimpleOpenNI.SKEL_TORSO);
+      bodyX[4]=convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_FOOT);
+      bodyY[4]=convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_FOOT);
+      bodyX[5]=convertLocationX(userId, SimpleOpenNI.SKEL_RIGHT_FOOT);
+      bodyY[5]=convertLocationY(userId, SimpleOpenNI.SKEL_RIGHT_FOOT);
+      bodyX[6]=convertLocationX(userId, SimpleOpenNI.SKEL_RIGHT_HAND);
+      bodyY[6]=convertLocationY(userId, SimpleOpenNI.SKEL_RIGHT_HAND);
+      bodyX[7]=convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_HAND);
+      bodyY[7]=convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_HAND);
 
-      //myMessage.add(bodyX[0]);
-      //myMessage.add(bodyY[0]);
-      //myMessage.add(bodyX[1]);
-      //myMessage.add(bodyY[1]);
-      //myMessage.add(bodyX[2]);
-      //myMessage.add(bodyY[2]);
-      //myMessage.add(bodyX[3]);
-      //myMessage.add(bodyY[3]);
-      //myMessage.add(bodyX[4]);
-      //myMessage.add(bodyY[4]);
-      //myMessage.add(bodyX[5]);
-      //myMessage.add(bodyY[5]);
-      //myMessage.add(bodyX[6]);
-      //myMessage.add(bodyY[6]);
-      //myMessage.add(bodyX[7]);
-      //myMessage.add(bodyY[7]);
-      //myMessage.add(bodyX[8]);
-      //myMessage.add(bodyY[8]);
-      //myMessage.add(bodyX[9]);
-      //myMessage.add(bodyY[9]);
-      //myMessage.add(bodyX[10]);
-      //myMessage.add(bodyY[10]);
-      //myMessage.add(bodyX[11]);
-      //myMessage.add(bodyY[11]);
-      //myMessage.add(bodyX[12]);
-      //myMessage.add(bodyY[12]);
-      //myMessage.add(bodyX[13]);
-      //myMessage.add(bodyY[13]);
-    
 
       for (int i=0; i<bodyX.length; i++) {
         myMessage.add(bodyX[i]);
