@@ -5,11 +5,17 @@ import oscP5.*;
 OscP5 oscP5; 
 
 ArrayList<Wave> wv=new ArrayList<Wave>();
-ArrayList<Butterfly> bf=new ArrayList<Butterfly>();
+ArrayList<Molfo> ml=new ArrayList<Molfo>();
 ArrayList<Monshiro> ms=new ArrayList<Monshiro>();
+ArrayList<Asagimadara>as=new ArrayList<Asagimadara>();
+ArrayList<Oomurasaki>oo=new ArrayList<Oomurasaki>();
+ArrayList<Ageha>ag=new ArrayList<Ageha>();
 
-float bfSpan=30;
-float msSpan=40;
+float mlSpan=30;
+float msSpan=15;
+float asSpan=120;
+float ooSpan=60;
+float agSpan=14;
 
 PVector targetLoc;
 PVector []body=new PVector[17];
@@ -31,7 +37,7 @@ void setup() {
 
   targetLoc=new PVector(width/2, height/2);
 
-  
+
   for (int i=0; i<body.length; i++) {
     body[i]=new PVector(width/2, height/2, radians(random(-45, 45)));
   }
@@ -51,13 +57,12 @@ void draw() {
   }
 
   //モルフォチョウ
-  for (int i=bf.size()-1; i>0; i--) {
-    Butterfly b=bf.get(i);
-    b.update(body[i%13]);
-    //b.update(body[12]);
-    b.display();
-    if (b.lifeSpan<0.0) {
-      bf.remove(i);
+  for (int i=ml.size()-1; i>0; i--) {
+    Molfo m=ml.get(i);
+    m.update(body[i%13]);
+    m.display();
+    if (m.lifeSpan<0.0) {
+      ml.remove(i);
     }
   }
 
@@ -68,6 +73,36 @@ void draw() {
     m.display();
     if (m.lifeSpan<0.0) {
       ms.remove(i);
+    }
+  }
+
+  //アサギマダラ
+  for (int i=as.size()-1; i>0; i--) {
+    Asagimadara a=as.get(i);
+    a.update(body[i%13]);
+    a.display();
+    if (a.lifeSpan<0.0) {
+      ms.remove(i);
+    }
+  }
+
+  //オオムラサキ
+  for (int i=oo.size()-1; i>0; i--) {
+    Oomurasaki o=oo.get(i);
+    o.update(body[i%13]);
+    o.display();
+    if (o.lifeSpan<0.0) {
+      oo.remove(i);
+    }
+  }
+
+  //アゲハ
+  for (int i=ag.size()-1; i>0; i--) {
+    Ageha a=ag.get(i);
+    a.update(body[i%13]);
+    a.display();
+    if (a.lifeSpan<0.0) {
+      ag.remove(i);
     }
   }
 
@@ -82,21 +117,46 @@ void draw() {
 
 void keyPressed() {
 
+  for (int i=0; i<ms.size(); i++) {
+    ms.remove(i);
+  }
+  for (int i=0; i<as.size(); i++) {
+    as.remove(i);
+  }
+  for (int i=0; i<ml.size(); i++) {
+    ml.remove(i);
+  }
+   for (int i=0; i<oo.size(); i++) {
+    oo.remove(i);
+  }
+  for (int i=0; i<ag.size(); i++) {
+    ag.remove(i);
+  }
+
   if (key=='a'||key=='A') {
     PVector location=new PVector(random(width), random(height));
-    bf.add(new Butterfly(location, bfSpan,radians(random(-45,45))));
+    ml.add(new Molfo(location, mlSpan, radians(random(-45, 45))));
     wv.add(new Wave(location));
-    for(int i=0;i<ms.size();i++){
-       ms.remove(i); 
-    }
   }
   if (key=='s'||key=='S') {
     PVector location=new PVector(random(width), random(height));
-    ms.add(new Monshiro(location, msSpan,radians(random(-45,45))));
+    ms.add(new Monshiro(location, msSpan, radians(random(-45, 45))));
     wv.add(new Wave(location));
-    for(int i=0;i<bf.size();i++){
-       bf.remove(i); 
-    }
+  }
+  if (key=='d'||key=='D') {
+    PVector location=new PVector(random(width), random(height));
+    as.add(new Asagimadara(location, asSpan, radians(random(-45, 45))));
+    wv.add(new Wave(location));
+  }
+  if (key=='f'||key=='F') {
+    PVector location=new PVector(random(width), random(height));
+    oo.add(new Oomurasaki(location, ooSpan, radians(random(-45, 45))));
+    wv.add(new Wave(location));
+  }
+  if (key=='g'||key=='G') {
+    PVector location=new PVector(random(width), random(height));
+    ag.add(new Ageha(location, agSpan, radians(random(-45, 45))));
+    wv.add(new Wave(location));
   }
 }
 
@@ -109,11 +169,5 @@ void oscEvent(OscMessage theOscMessage) {
       body[i].x=map(theOscMessage.get(2*i).floatValue(), 0, 640, 0, width);
       body[i].y=map(theOscMessage.get(2*i+1).floatValue(), 0, 640, 0, height);
     }
-  //println(body[12]);
-
-    // 最初の値をint型としてX座標にする
-    //targetLoc.x = map(theOscMessage.get(2).intValue(),0,640,0,width);
-    // 次の値をint型としてY座標にする
-    //targetLoc.y = map(theOscMessage.get(3).intValue(),0,480,0,height);
   }
 }

@@ -1,4 +1,4 @@
-class Butterfly {
+class Molfo {
   PVector location;
   PVector velocity;
   PVector acceleration;
@@ -11,19 +11,18 @@ class Butterfly {
   PVector target;
   float theta;
 
-  Butterfly(PVector _location, float _lifeSpan, float _theta) {
+  Molfo(PVector _location, float _lifeSpan, float _theta) {
     theta=_theta;
     location=_location.get();
     lifeSpan=_lifeSpan;
     velocity=new PVector();
     acceleration=new PVector(0, 0);
-    bfimg=loadImage("butterfly.png");
+    bfimg=loadImage("molfo.png");
   }
 
 
   void update(PVector _target) {
     target=_target;
-    println(target);
     velocity=new PVector(target.x-location.x, target.y-location.y); 
     velocity.normalize();
     velocity.mult(3);
@@ -42,8 +41,8 @@ class Butterfly {
     pushMatrix();
     translate(location.x, location.y);
     rotate(theta);
-    image(bfimg, 0, 0, map(noise(widthNoise), 0, 1, 0, 60), 40);
-    image(bfimg, 0, 0, map(noise(widthNoise), 0, 1, 0, 60), 40);
+    image(bfimg, 0, 0, map(noise(widthNoise), 0, 1, 0, 150), 150);
+    image(bfimg, 0, 0, map(noise(widthNoise), 0, 1, 0, 150), 150);
     popMatrix();
   }
 
