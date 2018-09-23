@@ -11,7 +11,7 @@ class Oomurasaki extends Molfo{
     imageMode(CENTER);
     pushMatrix();
     translate(location.x, location.y);
-    tint(int(lifeSpan*255/50));
+    tint(int(lifeSpan*255/60));
     image(ooimg, 0, 0, map(noise(widthNoise),0,1,0,50), 50);
     image(ooimg, 0, 0, map(noise(widthNoise),0,1,0,50), 50);
     popMatrix();

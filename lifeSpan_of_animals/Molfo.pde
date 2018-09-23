@@ -41,6 +41,7 @@ class Molfo {
     pushMatrix();
     translate(location.x, location.y);
     rotate(theta);
+    tint(int(lifeSpan*255/30));
     image(bfimg, 0, 0, map(noise(widthNoise), 0, 1, 0, 150), 150);
     image(bfimg, 0, 0, map(noise(widthNoise), 0, 1, 0, 150), 150);
     popMatrix();

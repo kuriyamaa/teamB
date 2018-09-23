@@ -11,7 +11,7 @@ class Ageha extends Molfo{
     imageMode(CENTER);
     pushMatrix();
     translate(location.x, location.y);
-    tint(int(lifeSpan*255/50));
+    tint(int(lifeSpan*255/120));
     image(agimg, 0, 0, map(noise(widthNoise),0,1,0,60), 60);
     image(agimg, 0, 0, map(noise(widthNoise),0,1,0,60), 60);
     popMatrix();

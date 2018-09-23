@@ -117,46 +117,95 @@ void draw() {
 
 void keyPressed() {
 
-  for (int i=0; i<ms.size(); i++) {
-    ms.remove(i);
-  }
-  for (int i=0; i<as.size(); i++) {
-    as.remove(i);
-  }
-  for (int i=0; i<ml.size(); i++) {
-    ml.remove(i);
-  }
-   for (int i=0; i<oo.size(); i++) {
-    oo.remove(i);
-  }
-  for (int i=0; i<ag.size(); i++) {
-    ag.remove(i);
-  }
-
   if (key=='a'||key=='A') {
     PVector location=new PVector(random(width), random(height));
     ml.add(new Molfo(location, mlSpan, radians(random(-45, 45))));
     wv.add(new Wave(location));
+
+    for (int i=0; i<ms.size(); i++) {
+      ms.remove(i);
+    }
+    for (int i=0; i<as.size(); i++) {
+      as.remove(i);
+    }
+    for (int i=0; i<oo.size(); i++) {
+      oo.remove(i);
+    }
+    for (int i=0; i<ag.size(); i++) {
+      ag.remove(i);
+    }
   }
   if (key=='s'||key=='S') {
     PVector location=new PVector(random(width), random(height));
     ms.add(new Monshiro(location, msSpan, radians(random(-45, 45))));
     wv.add(new Wave(location));
+
+    for (int i=0; i<as.size(); i++) {
+      as.remove(i);
+    }
+    for (int i=0; i<ml.size(); i++) {
+      ml.remove(i);
+    }
+    for (int i=0; i<oo.size(); i++) {
+      oo.remove(i);
+    }
+    for (int i=0; i<ag.size(); i++) {
+      ag.remove(i);
+    }
   }
   if (key=='d'||key=='D') {
     PVector location=new PVector(random(width), random(height));
     as.add(new Asagimadara(location, asSpan, radians(random(-45, 45))));
     wv.add(new Wave(location));
+
+    for (int i=0; i<ms.size(); i++) {
+      ms.remove(i);
+    }
+    for (int i=0; i<ml.size(); i++) {
+      ml.remove(i);
+    }
+    for (int i=0; i<oo.size(); i++) {
+      oo.remove(i);
+    }
+    for (int i=0; i<ag.size(); i++) {
+      ag.remove(i);
+    }
   }
   if (key=='f'||key=='F') {
     PVector location=new PVector(random(width), random(height));
     oo.add(new Oomurasaki(location, ooSpan, radians(random(-45, 45))));
     wv.add(new Wave(location));
+
+    for (int i=0; i<ms.size(); i++) {
+      ms.remove(i);
+    }
+    for (int i=0; i<as.size(); i++) {
+      as.remove(i);
+    }
+    for (int i=0; i<ml.size(); i++) {
+      ml.remove(i);
+    }
+    for (int i=0; i<ag.size(); i++) {
+      ag.remove(i);
+    }
   }
   if (key=='g'||key=='G') {
     PVector location=new PVector(random(width), random(height));
     ag.add(new Ageha(location, agSpan, radians(random(-45, 45))));
     wv.add(new Wave(location));
+
+    for (int i=0; i<ms.size(); i++) {
+      ms.remove(i);
+    }
+    for (int i=0; i<as.size(); i++) {
+      as.remove(i);
+    }
+    for (int i=0; i<ml.size(); i++) {
+      ml.remove(i);
+    }
+    for (int i=0; i<oo.size(); i++) {
+      oo.remove(i);
+    }
   }
 }
 
