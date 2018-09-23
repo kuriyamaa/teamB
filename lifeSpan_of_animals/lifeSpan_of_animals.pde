@@ -60,8 +60,8 @@ void draw() {
   //モルフォチョウ
   for (int i=ml.size()-1; i>0; i--) {
     Molfo m=ml.get(i);
-    //m.update(body[i%13]);
-    m.update(body[12]);
+    m.update(body[i%7]);
+    //m.update(body[12]);
     m.display();
     if (m.lifeSpan<0.0) {
       ml.remove(i);
@@ -71,8 +71,8 @@ void draw() {
   //モンシロチョウ
   for (int i=ms.size()-1; i>0; i--) {
     Monshiro m=ms.get(i);
-    //m.update(body[i%13]);
-    m.update(body[12]);
+    m.update(body[i%7]);
+    //m.update(body[12]);
     m.display();
     if (m.lifeSpan<0.0) {
       ms.remove(i);
@@ -82,8 +82,8 @@ void draw() {
   //アサギマダラ
   for (int i=as.size()-1; i>0; i--) {
     Asagimadara a=as.get(i);
-    //a.update(body[i%13]);
-    a.update(body[12]);
+    a.update(body[i%7]);
+    //a.update(body[12]);
     a.display();
     if (a.lifeSpan<0.0) {
       ms.remove(i);
@@ -93,8 +93,8 @@ void draw() {
   //オオムラサキ
   for (int i=oo.size()-1; i>0; i--) {
     Oomurasaki o=oo.get(i);
-    //o.update(body[i%13]);
-    o.update(body[12]);
+    o.update(body[i%7]);
+    //o.update(body[12]);
     o.display();
     if (o.lifeSpan<0.0) {
       oo.remove(i);
