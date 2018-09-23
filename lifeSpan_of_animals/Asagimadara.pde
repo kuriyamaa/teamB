@@ -14,6 +14,8 @@ class Asagimadara extends Molfo{
     tint(int(lifeSpan*255/120));
     image(asimg, 0, 0, map(noise(widthNoise),0,1,0,60), 60);
     image(asimg, 0, 0, map(noise(widthNoise),0,1,0,60), 60);
+    image(asimg, 0, 0, map(noise(widthNoise),0,1,0,60), 60);
+    image(asimg, 0, 0, map(noise(widthNoise),0,1,0,60), 60);
     popMatrix();
   }
   

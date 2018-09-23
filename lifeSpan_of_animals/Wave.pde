@@ -14,8 +14,8 @@ class Wave {
   }
 
   void update() {
-    diam+=2; 
-    lifeSpan-=1;
+    diam+=3; 
+    lifeSpan-=5;
   }
 
   void display() {
