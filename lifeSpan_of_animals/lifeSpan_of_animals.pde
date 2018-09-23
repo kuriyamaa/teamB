@@ -115,9 +115,8 @@ void draw() {
   //targetの可視化
   noStroke();
   fill(0, 100, 100, 100);
-  for (int i=0; i<13; i++) {
-    ellipse(body[i].x, body[i].y, 50, 50);
-  }
+  ellipse(body[0].x,body[0].y,50,50);
+  
 }
 
 
@@ -226,7 +225,7 @@ void oscEvent(OscMessage theOscMessage) {
   // もしOSCメッセージが
   if (theOscMessage.checkAddrPattern("kinect")==true) {   
 
-    for (int i=0; i<13; i++) {
+    for (int i=0; i<8; i++) {
       body[i].x=map(theOscMessage.get(2*i).floatValue(), 0, 640, 0, width);
       body[i].y=map(theOscMessage.get(2*i+1).floatValue(), 0, 640, 0, height);
     }
