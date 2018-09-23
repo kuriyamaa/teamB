@@ -105,7 +105,7 @@ void draw() {
   for (int i=ag.size()-1; i>0; i--) {
     Ageha a=ag.get(i);
     //a.update(body[i%13]);
-    a.update(body[12]);
+    a.update(body[i%7]);
     a.display();
     if (a.lifeSpan<0.0) {
       ag.remove(i);
@@ -116,7 +116,13 @@ void draw() {
   noStroke();
   fill(0, 100, 100, 100);
   ellipse(body[0].x,body[0].y,50,50);
-  
+  strokeWeight(5);
+  stroke(0, 100, 100, 100);
+  triangle(body[1].x,body[1].y,body[2].x,body[2].y,body[3].x,body[3].y);
+  line(body[3].x,body[3].y,body[4].x,body[4].y);
+  line(body[3].x,body[3].y,body[5].x,body[5].y);
+  line(body[2].x,body[2].y,body[6].x,body[6].y);
+  line(body[1].x,body[1].y,body[7].x,body[7].y);
 }
 
 
