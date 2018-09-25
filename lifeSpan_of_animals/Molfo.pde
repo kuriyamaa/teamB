@@ -33,7 +33,7 @@ class Molfo {
     acceleration.mult(0);
     lifeSpan-=0.1;
     ynoise+=0.07;
-    widthNoise+=0.1;
+    widthNoise+=0.5;
   }
 
   void display() {

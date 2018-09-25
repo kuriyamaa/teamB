@@ -11,6 +11,7 @@ class Monshiro extends Molfo {
     imageMode(CENTER);
     pushMatrix();
     translate(location.x, location.y);
+    rotate(theta);
     tint(int(lifeSpan*255/15));
     image(msimg, 0, 0, map(noise(widthNoise),0,1,0,40), 40);
     image(msimg, 0, 0, map(noise(widthNoise),0,1,0,40), 40);
