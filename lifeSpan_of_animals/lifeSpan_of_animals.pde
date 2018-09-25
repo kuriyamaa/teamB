@@ -161,7 +161,7 @@ void drawBody() {
   flowerTarget[25]=new PVector((flowerTarget[1].x+flowerTarget[3].x+flowerTarget[13].x)/3, (flowerTarget[1].y+flowerTarget[3].y+flowerTarget[13].y)/3);
   flowerTarget[26]=new PVector((flowerTarget[2].x+flowerTarget[3].x+flowerTarget[14].x)/3, (flowerTarget[2].y+flowerTarget[3].y+flowerTarget[14].y)/3);
   flowerTarget[27]=new PVector((flowerTarget[13].x+flowerTarget[17].x+flowerTarget[11].x)/3, (flowerTarget[13].y+flowerTarget[17].y+flowerTarget[11].y)/3);
-  flowerTarget[28]=new PVector((flowerTarget[14].x+flowerTarget[17].x+flowerTarget[10].x)/3, (flowerTarget[14].y+flowerTarget[17].y+flowerTarget[10].y)/3);
+  //flowerTarget[28]=new PVector((flowerTarget[14].x+flowerTarget[17].x+flowerTarget[10].x)/3, (flowerTarget[14].y+flowerTarget[17].y+flowerTarget[10].y)/3);
 
   //=====================add easing function to flower
   for (int i=0; i<flowerTarget.length; i++) {
