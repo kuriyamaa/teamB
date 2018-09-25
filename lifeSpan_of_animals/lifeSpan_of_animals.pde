@@ -4,6 +4,8 @@ import oscP5.*;
 //generate OSCP5 class of instance
 OscP5 oscP5; 
 
+int numFrames = 28;
+
 ArrayList<Wave> wv=new ArrayList<Wave>();
 ArrayList<Molfo> ml=new ArrayList<Molfo>();
 ArrayList<Monshiro> ms=new ArrayList<Monshiro>();
@@ -20,6 +22,7 @@ float easing=0.05;
 PVector []body=new PVector[17];
 float[]flowerSize=new float[28];
 PImage[]flowers=new PImage[28];
+PImage img;
 PVector[]flowerTarget=new PVector[28];
 PVector[]flowerPos=new PVector[28];
 
@@ -45,14 +48,20 @@ void setup() {
   }
 
   //flowers put in  array flowers
-  for (int i=0; i<flowers.length; i++) {
-    flowers[i]=loadImage(i+".png");
+  //for (int i=0; i<flowers.length; i++) {
+  //  flowers[i]=loadImage("0.png");
+  //}
+  img=loadImage("image0.png");
+
+  for (int i = 0; i < flowers.length; i++) {
+    flowers[i] = loadImage(i+".png");
   }
 
   for (int i=0; i<flowerSize.length; i++) {
-    flowerSize[i]=random(30, 50); 
+    flowerSize[i]=random(150, 200); 
     flowerPos[i]=new PVector(random(width), random(height));
   }
+  flowerSize[0]=300;
 }
 
 void draw() {
@@ -125,7 +134,7 @@ void draw() {
 
 
 void drawBody() {
-  
+
   for (int i=0; i<body.length; i++) {
     flowerTarget[i]=body[i];
   }
@@ -172,10 +181,14 @@ void drawBody() {
   }
 
   noTint();
-  for (int i=0; i<flowers.length; i++) {
-    image(flowers[i], flowerPos[i].x+20, flowerPos[i].y, flowerSize[i], flowerSize[i]);
-    image(flowers[i], flowerPos[i].x-20, flowerPos[i].y, flowerSize[i], flowerSize[i]);
+  for (int i=0; i<flowerPos.length; i++) {
+    image(flowers[1], flowerPos[i].x, flowerPos[i].y, flowerSize[i], flowerSize[i]);
   }
+
+  noStroke();
+  fill(0, 100, 100);
+  ellipse(body[6].x, body[6].y, 100, 100);
+  ellipse(body[7].x, body[7].y, 100, 100);
 }
 
 
