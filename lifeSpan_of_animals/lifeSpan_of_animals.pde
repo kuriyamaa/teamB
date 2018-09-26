@@ -21,7 +21,7 @@ float agSpan=14;
 float easing=0.05;
 PVector []body=new PVector[17];
 float[]flowerSize=new float[28];
-PImage[]flowers=new PImage[28];
+PImage[]flowers=new PImage[7];
 PImage img;
 PVector[]flowerTarget=new PVector[28];
 PVector[]flowerPos=new PVector[28];
@@ -29,8 +29,8 @@ PVector[]flowerPos=new PVector[28];
 
 void setup() {
 
-  fullScreen(P2D);
-  //size(1200, 1200, P2D);
+  //fullScreen(P2D);
+  size(1200, 1200, P2D);
   background(21);
   smooth();
   noCursor();
@@ -44,24 +44,18 @@ void setup() {
   oscP5 = new OscP5(this, 12000);
 
   for (int i=0; i<body.length; i++) {
-    body[i]=new PVector(width*2, height*2);
+    body[i]=new PVector(random(width), random(height));
   }
-
-  //flowers put in  array flowers
-  //for (int i=0; i<flowers.length; i++) {
-  //  flowers[i]=loadImage("0.png");
-  //}
-  img=loadImage("image0.png");
 
   for (int i = 0; i < flowers.length; i++) {
     flowers[i] = loadImage(i+".png");
   }
 
   for (int i=0; i<flowerSize.length; i++) {
-    flowerSize[i]=random(150, 200); 
+    flowerSize[i]=random(50, 100); 
     flowerPos[i]=new PVector(random(width), random(height));
   }
-  flowerSize[0]=300;
+  flowerSize[0]=200;
 }
 
 void draw() {
@@ -170,8 +164,7 @@ void drawBody() {
   flowerTarget[25]=new PVector((flowerTarget[1].x+flowerTarget[3].x+flowerTarget[13].x)/3, (flowerTarget[1].y+flowerTarget[3].y+flowerTarget[13].y)/3);
   flowerTarget[26]=new PVector((flowerTarget[2].x+flowerTarget[3].x+flowerTarget[14].x)/3, (flowerTarget[2].y+flowerTarget[3].y+flowerTarget[14].y)/3);
   flowerTarget[27]=new PVector((flowerTarget[13].x+flowerTarget[17].x+flowerTarget[11].x)/3, (flowerTarget[13].y+flowerTarget[17].y+flowerTarget[11].y)/3);
-  //flowerTarget[28]=new PVector((flowerTarget[14].x+flowerTarget[17].x+flowerTarget[10].x)/3, (flowerTarget[14].y+flowerTarget[17].y+flowerTarget[10].y)/3);
-
+  
   //=====================add easing function to flower
   for (int i=0; i<flowerTarget.length; i++) {
     float dx = flowerTarget[i].x - flowerPos[i].x;
@@ -182,7 +175,7 @@ void drawBody() {
 
   noTint();
   for (int i=0; i<flowerPos.length; i++) {
-    image(flowers[1], flowerPos[i].x, flowerPos[i].y, flowerSize[i], flowerSize[i]);
+    image(flowers[i%7], flowerPos[i].x, flowerPos[i].y, flowerSize[i], flowerSize[i]);
   }
 
   noStroke();
