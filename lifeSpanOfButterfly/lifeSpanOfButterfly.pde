@@ -33,7 +33,7 @@ PImage img;
 PVector[]flowerTarget=new PVector[28];
 PVector[]flowerPos=new PVector[28];
 PVector wind;
-PVector gravity=new PVector(0,2);
+PVector gravity=new PVector(0,5);
 float windNoise=0.0;
 
 
@@ -94,15 +94,23 @@ void draw() {
   makeBody();
   drawBody();
 
-  //ganerate wave
-  for (int i=wv.size()-1; i>=0; i--) {
-    Wave w=wv.get(i); 
-    w.run();
-    if (w.isDead()) {
-      wv.remove(i);
+ //=============draw Petal
+  for (int i=pt.size()-1; i>=0; i--) {
+    Petal p=pt.get(i);
+    p.addForce(gravity);
+    p.addForce(wind);
+    p.update();
+    p.display();
+    if (p.isDead()) {
+      pt.remove(i);
     }
   }
 
+  //============create petal
+  if (random(1)>0.9) {
+    pt.add(new Petal(flowerPos[int(random(27))], int(random(3)),random(1,3)));
+  }
+ 
   //モルフォチョウ
   for (int i=ml.size()-1; i>=0; i--) {
     Molfo m=ml.get(i);

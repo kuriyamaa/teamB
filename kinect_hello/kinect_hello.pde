@@ -1,6 +1,5 @@
 import netP5.*;
 import oscP5.*;
-
 import SimpleOpenNI.*;
 
 
