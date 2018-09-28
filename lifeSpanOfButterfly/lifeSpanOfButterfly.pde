@@ -183,9 +183,9 @@ void drawBody() {
   }
 
   //Midpoint of head and torso
-  flowerTarget[12]=new PVector((body[0].x+body[3].x)/2, (body[0].y+body[3].y)/2);
+  flowerTarget[27]=new PVector((body[0].x+body[3].x)/2, (body[0].y+body[3].y)/2);
   //Midpoint of torso, left shoulder and left hand
-  flowerTarget[13]=new PVector((body[1].x+body[7].x+body[3].x)/3, (body[1].y+body[7].y+body[3].y)/3);
+  flowerTarget[26]=new PVector((body[1].x+body[7].x+body[3].x)/3, (body[1].y+body[7].y+body[3].y)/3);
   //Midpoint of torso, right shoulder and right hand
   flowerTarget[14]=new PVector((body[2].x+body[8].x+body[3].x)/3, (body[2].y+body[8].y+body[3].y)/3);
   //Midpoint of left shoulder and left hand
@@ -211,8 +211,6 @@ void drawBody() {
 
   //ここから適当
   flowerTarget[25]=new PVector((flowerTarget[1].x+flowerTarget[3].x+flowerTarget[13].x)/3, (flowerTarget[1].y+flowerTarget[3].y+flowerTarget[13].y)/3);
-  flowerTarget[26]=new PVector((flowerTarget[2].x+flowerTarget[3].x+flowerTarget[14].x)/3, (flowerTarget[2].y+flowerTarget[3].y+flowerTarget[14].y)/3);
-  flowerTarget[27]=new PVector((flowerTarget[13].x+flowerTarget[17].x+flowerTarget[11].x)/3, (flowerTarget[13].y+flowerTarget[17].y+flowerTarget[11].y)/3);
   
   //=====================add easing function to flower
   for (int i=0; i<flowerTarget.length; i++) {
@@ -227,10 +225,6 @@ void drawBody() {
     image(flowers[i%7], flowerPos[i].x, flowerPos[i].y, flowerSize[i], flowerSize[i]);
   }
 
-  noStroke();
-  fill(0, 100, 100);
-  ellipse(body[6].x, body[6].y, 100, 100);
-  ellipse(body[7].x, body[7].y, 100, 100);
 }
 
 
@@ -239,7 +233,7 @@ void oscEvent(OscMessage theOscMessage) {
   // もしOSCメッセージが
   if (theOscMessage.checkAddrPattern("kinect")==true) {   
 
-    for (int i=0; i<10; i++) {
+    for (int i=0; i<14; i++) {
       body[i].x=map(theOscMessage.get(2*i).floatValue(), -640, 0, 0, width);
       body[i].y=map(theOscMessage.get(2*i+1).floatValue(), 0, 480, 0, height);
     }
