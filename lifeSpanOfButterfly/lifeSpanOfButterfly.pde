@@ -17,6 +17,8 @@ ArrayList<Monshiro> ms=new ArrayList<Monshiro>();
 ArrayList<Asagimadara>as=new ArrayList<Asagimadara>();
 ArrayList<Oomurasaki>oo=new ArrayList<Oomurasaki>();
 ArrayList<Ageha>ag=new ArrayList<Ageha>();
+ArrayList<Petal>pt=new ArrayList<Petal>(); 
+
 
 float mlSpan=30;
 float msSpan=15;
@@ -30,6 +32,9 @@ PImage[]flowers=new PImage[7];
 PImage img;
 PVector[]flowerTarget=new PVector[28];
 PVector[]flowerPos=new PVector[28];
+PVector wind;
+PVector gravity=new PVector(0,2);
+float windNoise=0.0;
 
 
 void setup() {
@@ -66,11 +71,28 @@ void setup() {
     flowerPos[i]=new PVector(random(width), random(height));
   }
   flowerSize[0]=200;
+  wind=new PVector(0, 0);
 }
 
 void draw() {
 
   background(21);
+  
+  //make wind
+  wind=new PVector(map(noise(windNoise),0,1,-5,5),0);
+  windNoise+=0.01;
+
+  //ganerate wave
+  for (int i=wv.size()-1; i>=0; i--) {
+    Wave w=wv.get(i); 
+    w.run();
+    if (w.isDead()) {
+      wv.remove(i);
+    }
+  }
+
+  makeBody();
+  drawBody();
 
   //ganerate wave
   for (int i=wv.size()-1; i>=0; i--) {
@@ -133,7 +155,6 @@ void draw() {
       ag.remove(i);
     }
   }
-  drawBody();
   
   if (val==1) {
     PVector location=new PVector(random(width), random(height));
@@ -176,8 +197,7 @@ void serialEvent(Serial p){
 }
 
 
-void drawBody() {
-
+void makeBody() {
   for (int i=0; i<body.length; i++) {
     flowerTarget[i]=body[i];
   }
@@ -211,7 +231,6 @@ void drawBody() {
 
   //ここから適当
   flowerTarget[25]=new PVector((flowerTarget[1].x+flowerTarget[3].x+flowerTarget[13].x)/3, (flowerTarget[1].y+flowerTarget[3].y+flowerTarget[13].y)/3);
-  
   //=====================add easing function to flower
   for (int i=0; i<flowerTarget.length; i++) {
     float dx = flowerTarget[i].x - flowerPos[i].x;
@@ -219,12 +238,15 @@ void drawBody() {
     float dy = flowerTarget[i].y - flowerPos[i].y;
     flowerPos[i].y += dy * easing;
   }
+}
+
+
+void drawBody() {
 
   noTint();
   for (int i=0; i<flowerPos.length; i++) {
     image(flowers[i%7], flowerPos[i].x, flowerPos[i].y, flowerSize[i], flowerSize[i]);
   }
-
 }
 
 
