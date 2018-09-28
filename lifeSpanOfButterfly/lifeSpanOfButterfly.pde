@@ -33,7 +33,7 @@ PImage img;
 PVector[]flowerTarget=new PVector[28];
 PVector[]flowerPos=new PVector[28];
 PVector wind;
-PVector gravity=new PVector(0,5);
+PVector gravity=new PVector(0, 5);
 float windNoise=0.0;
 
 
@@ -48,10 +48,10 @@ void setup() {
   blendMode(ADD);
   frameRate(30);
   imageMode(CENTER);
-  
+
   //println(Serial.list());
   //port番号は適宜
-  String arduinoPort=Serial.list()[9];
+  String arduinoPort=Serial.list()[3];
   port = new Serial(this, arduinoPort, 9600);
 
 
@@ -77,9 +77,9 @@ void setup() {
 void draw() {
 
   background(21);
-  
+
   //make wind
-  wind=new PVector(map(noise(windNoise),0,1,-5,5),0);
+  wind=new PVector(map(noise(windNoise), 0, 1, -5, 5), 0);
   windNoise+=0.01;
 
   //ganerate wave
@@ -94,7 +94,7 @@ void draw() {
   makeBody();
   drawBody();
 
- //=============draw Petal
+  //=============draw Petal
   for (int i=pt.size()-1; i>=0; i--) {
     Petal p=pt.get(i);
     p.addForce(gravity);
@@ -108,13 +108,13 @@ void draw() {
 
   //============create petal
   if (random(1)>0.9) {
-    pt.add(new Petal(flowerPos[int(random(27))], int(random(3)),random(1,3)));
+    pt.add(new Petal(flowerPos[int(random(27))], int(random(3)), random(1, 3)));
   }
- 
+
   //モルフォチョウ
   for (int i=ml.size()-1; i>=0; i--) {
     Molfo m=ml.get(i);
-    m.update(flowerTarget[i%29]);
+    m.update(flowerTarget[i%28]);
     //m.update(body[12]);
     m.display();
     if (m.lifeSpan<0.0) {
@@ -125,7 +125,7 @@ void draw() {
   //モンシロチョウ
   for (int i=ms.size()-1; i>=0; i--) {
     Monshiro m=ms.get(i);
-    m.update(flowerTarget[i%29]);
+    m.update(flowerTarget[i%28]);
     //m.update(body[12]);
     m.display();
     if (m.lifeSpan<0.0) {
@@ -136,7 +136,7 @@ void draw() {
   //アサギマダラ
   for (int i=as.size()-1; i>=0; i--) {
     Asagimadara a=as.get(i);
-    a.update(flowerTarget[i%29]);
+    a.update(flowerTarget[i%28]);
     a.display();
     if (a.lifeSpan<0.0) {
       ms.remove(i);
@@ -146,7 +146,7 @@ void draw() {
   //オオムラサキ
   for (int i=oo.size()-1; i>=0; i--) {
     Oomurasaki o=oo.get(i);
-    o.update(flowerTarget[i%29]);
+    o.update(flowerTarget[i%28]);
     //o.update(body[12]);
     o.display();
     if (o.lifeSpan<0.0) {
@@ -157,51 +157,53 @@ void draw() {
   //アゲハ
   for (int i=ag.size()-1; i>=0; i--) {
     Ageha a=ag.get(i);
-    a.update(flowerTarget[i%29]);
+    a.update(flowerTarget[i%28]);
     a.display();
     if (a.lifeSpan<0.0) {
       ag.remove(i);
     }
   }
-  
-  if (val==1) {
-    PVector location=new PVector(random(width), random(height));
-    ml.add(new Molfo(location, mlSpan, radians(random(-90, 90))));
-    wv.add(new Wave(location));
-  }
-  if (val==2) {
-    for (int i=0; i<3; i++) {
+
+  if (val==1||val==2||val==3||val==4||val==5) {
+    if (val==1) {
       PVector location=new PVector(random(width), random(height));
-      ms.add(new Monshiro(location, msSpan, radians(random(-90, 90))));
+      ml.add(new Molfo(location, mlSpan, radians(random(-90, 90))));
       wv.add(new Wave(location));
     }
-  }
-  if (val==3) {
-    for (int i=0; i<3; i++) {
-      PVector location=new PVector(random(width), random(height));
-      as.add(new Asagimadara(location, asSpan, radians(random(-90, 90))));
-      wv.add(new Wave(location));
+    if (val==2) {
+      for (int i=0; i<3; i++) {
+        PVector location=new PVector(random(width), random(height));
+        ms.add(new Monshiro(location, msSpan, radians(random(-90, 90))));
+        wv.add(new Wave(location));
+      }
     }
-  }
-  if (val==4) {
-    for (int i=0; i<3; i++) {
-      PVector location=new PVector(random(width), random(height));
-      oo.add(new Oomurasaki(location, ooSpan, radians(random(-90, 90))));
-      wv.add(new Wave(location));
+    if (val==3) {
+      for (int i=0; i<3; i++) {
+        PVector location=new PVector(random(width), random(height));
+        as.add(new Asagimadara(location, asSpan, radians(random(-90, 90))));
+        wv.add(new Wave(location));
+      }
     }
-  }
-  if (val==5) {
-    for (int i=0; i<3; i++) {
-      PVector location=new PVector(random(width), random(height));
-      ag.add(new Ageha(location, agSpan, radians(random(-90, 90))));
-      wv.add(new Wave(location));
+    if (val==4) {
+      for (int i=0; i<3; i++) {
+        PVector location=new PVector(random(width), random(height));
+        oo.add(new Oomurasaki(location, ooSpan, radians(random(-90, 90))));
+        wv.add(new Wave(location));
+      }
+    }
+    if (val==5) {
+      for (int i=0; i<3; i++) {
+        PVector location=new PVector(random(width), random(height));
+        ag.add(new Ageha(location, agSpan, radians(random(-90, 90))));
+        wv.add(new Wave(location));
+      }
     }
   }
 }
 //シリアルイベント
-void serialEvent(Serial p){
- p=port;
- val=port.read();
+void serialEvent(Serial p) {
+  p=port;
+  val=port.read();
 }
 
 

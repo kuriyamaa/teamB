@@ -98,14 +98,6 @@ void draw() {
       oscP5.send(myMessage, myRemoteLocation);
     }
   }
-  //OscMessage myMessage = new OscMessage("kinect");
-  //myMessage.add(mouseX);
-  //myMessage.add(mouseY); 
-  ////send OSC message
-  //oscP5.send(myMessage, myRemoteLocation);
-
-  //fill(255, 0, 0);
-  //ellipse(mouseX, mouseY, 30, 30);
 }
 //Draw the skeleton
 void drawSkeleton(int userId) {
