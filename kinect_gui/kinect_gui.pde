@@ -63,25 +63,3 @@ void draw() {
   depthImg.updatePixels();
   image(depthImg, kinect.width, 0);
 }
-
-// Adjust the angle and the depth threshold min and max
-//void keyPressed() {
-//  if (key == CODED) {
-//    if (keyCode == UP) {
-//      angle++;
-//    } else if (keyCode == DOWN) {
-//      angle--;
-//    }
-//    angle = constrain(angle, 0, 30);
-//    //角度の変換
-//    kinect.setTilt(angle);
-//  } else if (key == 'a') {
-//    minDepth = constrain(minDepth+100, 0, maxDepth);
-//  } else if (key == 's') {
-//    minDepth = constrain(minDepth-100, 0, maxDepth);
-//  } else if (key == 'z') {
-//    maxDepth = constrain(maxDepth+100, minDepth, 2047);
-//  } else if (key =='x') {
-//    maxDepth = constrain(maxDepth-100, minDepth, 2047);
-//  }
-//}
