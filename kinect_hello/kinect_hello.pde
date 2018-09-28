@@ -83,8 +83,12 @@ void draw() {
       bodyY[10]=convertLocationY(userId, SimpleOpenNI.SKEL_RIGHT_KNEE);
       bodyX[11]=-1*convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_KNEE);
       bodyY[11]=convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_KNEE);
+      bodyX[12]=-1*convertLocationX(userId, SimpleOpenNI.SKEL_RIGHT_ELBOW);
+      bodyY[12]=convertLocationY(userId, SimpleOpenNI.SKEL_RIGHT_ELBOW);
+      bodyX[13]=-1*convertLocationX(userId, SimpleOpenNI.SKEL_LEFT_ELBOW);
+      bodyY[13]=convertLocationY(userId, SimpleOpenNI.SKEL_LEFT_ELBOW);
       
-      println(bodyX[0]);
+      
 
 
       for (int i=0; i<bodyX.length; i++) {

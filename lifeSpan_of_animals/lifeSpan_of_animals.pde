@@ -1,5 +1,10 @@
 import netP5.*;
 import oscP5.*;
+import processing.serial.*;
+
+Serial port;
+//arduinoから受け取った値を格納する変数
+int val;
 
 //generate OSCP5 class of instance
 OscP5 oscP5; 
@@ -35,9 +40,14 @@ void setup() {
   smooth();
   noCursor();
   colorMode(HSB, 360, 100, 100, 100);
-  blendMode(ADD);
   frameRate(30);
   imageMode(CENTER);
+  
+  //println(Serial.list());
+  //port番号は適宜
+  String arduinoPort=Serial.list()[9];
+  port = new Serial(this, arduinoPort, 9600);
+
 
 
   // ポートを12000に設定して新規にOSCP5のインスタンスを生成する
@@ -52,16 +62,14 @@ void setup() {
   }
 
   for (int i=0; i<flowerSize.length; i++) {
-    flowerSize[i]=random(50, 100); 
+    flowerSize[i]=random(100, 150); 
     flowerPos[i]=new PVector(random(width), random(height));
   }
-  flowerSize[0]=200;
+  flowerSize[0]=150;
 }
 
 void draw() {
-
   background(21);
-
   //ganerate wave
   for (int i=wv.size()-1; i>=0; i--) {
     Wave w=wv.get(i); 
@@ -70,6 +78,8 @@ void draw() {
       wv.remove(i);
     }
   }
+
+  drawBody();
 
   //モルフォチョウ
   for (int i=ml.size()-1; i>=0; i--) {
@@ -123,20 +133,20 @@ void draw() {
       ag.remove(i);
     }
   }
-  drawBody();
 }
 
 
 void drawBody() {
 
+  blendMode(BLEND);
   for (int i=0; i<body.length; i++) {
     flowerTarget[i]=body[i];
   }
 
   //Midpoint of head and torso
-  flowerTarget[12]=new PVector((body[0].x+body[3].x)/2, (body[0].y+body[3].y)/2);
+  flowerTarget[27]=new PVector((body[0].x+body[3].x)/2, (body[0].y+body[3].y)/2);
   //Midpoint of torso, left shoulder and left hand
-  flowerTarget[13]=new PVector((body[1].x+body[7].x+body[3].x)/3, (body[1].y+body[7].y+body[3].y)/3);
+  flowerTarget[26]=new PVector((body[1].x+body[7].x+body[3].x)/3, (body[1].y+body[7].y+body[3].y)/3);
   //Midpoint of torso, right shoulder and right hand
   flowerTarget[14]=new PVector((body[2].x+body[8].x+body[3].x)/3, (body[2].y+body[8].y+body[3].y)/3);
   //Midpoint of left shoulder and left hand
@@ -162,9 +172,6 @@ void drawBody() {
 
   //ここから適当
   flowerTarget[25]=new PVector((flowerTarget[1].x+flowerTarget[3].x+flowerTarget[13].x)/3, (flowerTarget[1].y+flowerTarget[3].y+flowerTarget[13].y)/3);
-  flowerTarget[26]=new PVector((flowerTarget[2].x+flowerTarget[3].x+flowerTarget[14].x)/3, (flowerTarget[2].y+flowerTarget[3].y+flowerTarget[14].y)/3);
-  flowerTarget[27]=new PVector((flowerTarget[13].x+flowerTarget[17].x+flowerTarget[11].x)/3, (flowerTarget[13].y+flowerTarget[17].y+flowerTarget[11].y)/3);
-  
   //=====================add easing function to flower
   for (int i=0; i<flowerTarget.length; i++) {
     float dx = flowerTarget[i].x - flowerPos[i].x;
@@ -177,43 +184,38 @@ void drawBody() {
   for (int i=0; i<flowerPos.length; i++) {
     image(flowers[i%7], flowerPos[i].x, flowerPos[i].y, flowerSize[i], flowerSize[i]);
   }
-
-  noStroke();
-  fill(0, 100, 100);
-  ellipse(body[6].x, body[6].y, 100, 100);
-  ellipse(body[7].x, body[7].y, 100, 100);
 }
 
 
 void keyPressed() {
 
-  if (key=='a'||key=='A') {
+  if (key=='a'||key=='A'||val==1) {
     PVector location=new PVector(random(width), random(height));
     ml.add(new Molfo(location, mlSpan, radians(random(-90, 90))));
     wv.add(new Wave(location));
   }
-  if (key=='s'||key=='S') {
+  if (key=='s'||key=='S'||val==2) {
     for (int i=0; i<3; i++) {
       PVector location=new PVector(random(width), random(height));
       ms.add(new Monshiro(location, msSpan, radians(random(-90, 90))));
       wv.add(new Wave(location));
     }
   }
-  if (key=='d'||key=='D') {
+  if (key=='d'||key=='D'||val==3) {
     for (int i=0; i<3; i++) {
       PVector location=new PVector(random(width), random(height));
       as.add(new Asagimadara(location, asSpan, radians(random(-90, 90))));
       wv.add(new Wave(location));
     }
   }
-  if (key=='f'||key=='F') {
+  if (key=='f'||key=='F'||val==4) {
     for (int i=0; i<3; i++) {
       PVector location=new PVector(random(width), random(height));
       oo.add(new Oomurasaki(location, ooSpan, radians(random(-90, 90))));
       wv.add(new Wave(location));
     }
   }
-  if (key=='g'||key=='G') {
+  if (key=='g'||key=='G'||val==5) {
     for (int i=0; i<3; i++) {
       PVector location=new PVector(random(width), random(height));
       ag.add(new Ageha(location, agSpan, radians(random(-90, 90))));
@@ -222,12 +224,18 @@ void keyPressed() {
   }
 }
 
+//シリアルイベント
+void serialEvent(Serial p){
+ p=port;
+ val=port.read();
+}
+
 // OSCメッセージを受信した際に実行するイベント
 void oscEvent(OscMessage theOscMessage) {
   // もしOSCメッセージが
   if (theOscMessage.checkAddrPattern("kinect")==true) {   
 
-    for (int i=0; i<10; i++) {
+    for (int i=0; i<14; i++) {
       body[i].x=map(theOscMessage.get(2*i).floatValue(), -640, 0, 0, width);
       body[i].y=map(theOscMessage.get(2*i+1).floatValue(), 0, 480, 0, height);
     }

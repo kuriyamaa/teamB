@@ -8,14 +8,17 @@ class Oomurasaki extends Molfo{
   }
 
   void display() {
+    blendMode(ADD);
     imageMode(CENTER);
     pushMatrix();
     translate(location.x, location.y);
     rotate(theta);
     tint(int(lifeSpan*255/60));
-    image(ooimg, 0, 0, map(noise(widthNoise),0,1,0,50), 50);
-    image(ooimg, 0, 0, map(noise(widthNoise),0,1,0,50), 50);
-    image(ooimg, 0, 0, map(noise(widthNoise),0,1,0,50), 50);
+    noStroke();
+    fill(275,95,75,5*lifeSpan/60);
+    for(int i=0;i<16;i++){
+      ellipse(0,0,4*i,4*i);
+    }
     image(ooimg, 0, 0, map(noise(widthNoise),0,1,0,50), 50);
     popMatrix();
   }
