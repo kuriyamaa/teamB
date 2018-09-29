@@ -108,14 +108,13 @@ void draw() {
 
   //============create petal
   if (random(1)>0.9) {
-    pt.add(new Petal(flowerPos[int(random(27))], int(random(3)), random(1, 3)));
+    pt.add(new Petal(flowerPos[int(random(27))], int(random(9)), random(1, 3)));
   }
 
   //モルフォチョウ
   for (int i=ml.size()-1; i>=0; i--) {
     Molfo m=ml.get(i);
     m.update(flowerTarget[i%28]);
-    //m.update(body[12]);
     m.display();
     if (m.lifeSpan<0.0) {
       ml.remove(i);
@@ -126,7 +125,6 @@ void draw() {
   for (int i=ms.size()-1; i>=0; i--) {
     Monshiro m=ms.get(i);
     m.update(flowerTarget[i%28]);
-    //m.update(body[12]);
     m.display();
     if (m.lifeSpan<0.0) {
       ms.remove(i);
@@ -147,7 +145,6 @@ void draw() {
   for (int i=oo.size()-1; i>=0; i--) {
     Oomurasaki o=oo.get(i);
     o.update(flowerTarget[i%28]);
-    //o.update(body[12]);
     o.display();
     if (o.lifeSpan<0.0) {
       oo.remove(i);
@@ -166,33 +163,35 @@ void draw() {
 
   if (val==1||val==2||val==3||val==4||val==5) {
     if (val==1) {
-      PVector location=new PVector(random(width), random(height));
-      ml.add(new Molfo(location, mlSpan, radians(random(-90, 90))));
-      wv.add(new Wave(location));
+      if (frameCount%10==0) {
+        PVector location=new PVector(random(width), random(height));
+        ml.add(new Molfo(location, mlSpan, radians(random(-90, 90))));
+        wv.add(new Wave(location));
+      }
     }
     if (val==2) {
-      for (int i=0; i<3; i++) {
+      if (frameCount%5==0) {
         PVector location=new PVector(random(width), random(height));
         ms.add(new Monshiro(location, msSpan, radians(random(-90, 90))));
         wv.add(new Wave(location));
       }
     }
     if (val==3) {
-      for (int i=0; i<3; i++) {
+      if (frameCount%5==0) {
         PVector location=new PVector(random(width), random(height));
         as.add(new Asagimadara(location, asSpan, radians(random(-90, 90))));
         wv.add(new Wave(location));
       }
     }
     if (val==4) {
-      for (int i=0; i<3; i++) {
+      if (frameCount%5==0) {        
         PVector location=new PVector(random(width), random(height));
         oo.add(new Oomurasaki(location, ooSpan, radians(random(-90, 90))));
         wv.add(new Wave(location));
       }
     }
     if (val==5) {
-      for (int i=0; i<3; i++) {
+      if (frameCount%5==0) {        
         PVector location=new PVector(random(width), random(height));
         ag.add(new Ageha(location, agSpan, radians(random(-90, 90))));
         wv.add(new Wave(location));
